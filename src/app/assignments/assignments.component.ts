@@ -8,6 +8,7 @@ import { RenduDirective } from "../shared/rendu.directive";
 import { Assignment } from './assignment.model';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from "./add-assignment/add-assignment.component";
+import { AssignmentsService } from '../shared/assignments.service';
 
 @Component({
     selector: 'app-assignments',
@@ -25,39 +26,24 @@ export class AssignmentsComponent implements OnInit {
   // Mémorisation de l'assignment cliqué
   assignmentSelectionne:Assignment | undefined;
 
+  constructor(private assignmentService: AssignmentsService){
 
-  assignments:Assignment[] = [
-    {
-      nom:"Devoir Angular de Michel Buffa",
-      dateDeRendu: new Date("2024-02-15"),
-      rendu:false
-    },
-    {
-      nom:"Devoir SQL3 de Serge Miranda",
-      dateDeRendu: new Date("2024-01-15"),
-      rendu:true
-    },
-    {
-      nom:"Devoir BD de Mr Gabriel Mopolo",
-      dateDeRendu: new Date("2024-03-01"),
-      rendu:false
-    }
-  ];
+  }
+
+
+  assignments:Assignment[] = [];
 
   getColor(a:any) {
     return a.rendu ? 'green' : 'red';
   }
 
   ngOnInit() {
-    // appelée une seule fois à la création du composant
-    // on active le bouton au bout de 3 secondes
-    /*
-    setTimeout(() => {
-      this.boutonActive=true;
-    }, 3000);
-    */
+    console.log("Appeleez avant l'affichage des composants");
+    this.assignmentService.getAssignments().subscribe((assignments) => {
+      console.log("Assignments reçus dans le composant");
+      this.assignments = assignments;
+    });
   }
-
 
   assignmentClicke(a:Assignment) {
     console.log("Assignment cliqué: " + a.nom);
@@ -70,7 +56,17 @@ export class AssignmentsComponent implements OnInit {
   }
 
   ajouteAssignement(event:Assignment) {
-    this.assignments.push(event);
-    this.formVisible = false;
+    this.assignmentService.addAssignment(event).subscribe((reponse) => {
+      console.log(reponse);
+      this.formVisible = false;
+    });
+  }
+
+  deleteAssignement(){
+    if(this.assignmentSelectionne){
+      var index = this.assignments.indexOf(this.assignmentSelectionne);
+      this.assignments.splice(index, 1);
+      this.assignmentSelectionne = undefined;
+    }
   }
 }

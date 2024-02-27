@@ -43,5 +43,4 @@ export class AddAssignmentComponent {
     //this.assignments.push(nouvelAssignment);
     this.nouvelAssignment.emit(nouvelAssignment);
   }
-
 }
