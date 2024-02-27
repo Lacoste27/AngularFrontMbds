@@ -1,0 +1,57 @@
+@if(formVisible) {
+<app-add-assignment
+  (nouvelAssignment)="ajouteAssignement($event)"
+></app-add-assignment>
+} @else {
+<div class="container">
+  <button mat-flat-button color="accent" (click)="onAddAssignmentBtnClick()"
+          class="btnAjout"
+  >
+    Ajouter Assignment
+  </button>
+
+  <h2>{{ titre }}</h2>
+
+  <mat-divider></mat-divider>
+  <mat-list>
+    @for(a of assignments; track a.nom) {
+    <mat-list-item (click)="assignmentClicke(a)">
+      <div [ngStyle]="{ color: a.rendu ? 'green' : 'red' }">
+        <h3 matLine>{{ a.nom }}</h3>
+        <p matLine>rendu: {{ a.rendu }}</p>
+        <h3 matListItemTitle>{{ a.dateDeRendu | date }}</h3>
+        <p matListItemLine>{{ a.nom }} rendu: {{ a.rendu }}</p>
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    }
+  </mat-list>
+
+  <app-assignment-detail
+    [assignmentTransmis]="assignmentSelectionne"
+  ></app-assignment-detail>
+</div>
+}
+
+<!--
+<p>Avec Angular supérieur à la version 17</p>
+<table>
+  <tbody>
+    @for (a of assignments; track a.nom) {
+      <div [ngStyle]="{'color':getColor(a)}">
+      @if(a.rendu) {
+        <tr>
+          <td>{{ a.nom }}</td>
+          <td>{{ a.dateDeRendu|date }}</td>
+          <td>{{ a.rendu }}</td>
+        </tr>
+      } @else {
+        <tr>
+          <td>{{ a.nom }} NON RENDU !!!!</td>
+        </tr>
+      }
+    </div>
+    }
+  </tbody>
+</table>
+-->
