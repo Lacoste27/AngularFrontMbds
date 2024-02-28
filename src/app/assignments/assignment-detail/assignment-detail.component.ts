@@ -7,17 +7,22 @@ import { Assignment } from '../assignment.model';
 import { MatButtonModule } from '@angular/material/button';
 import { AssignmentsService } from '../../shared/assignments.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../shared/auth.service';
+
 @Component({
   selector: 'app-assignment-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatCheckboxModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatCheckboxModule, MatButtonModule, RouterLink],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent implements OnInit {
+
   assignmentTransmis!: Assignment | undefined;
 
   constructor(private assignementService: AssignmentsService, 
+              private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router){
   }
@@ -47,5 +52,9 @@ export class AssignmentDetailComponent implements OnInit {
         this.router.navigate(['home']);
       });
     }
+  }
+
+  isAdmin(){
+    return this.authService.loggedIn;
   }
 }

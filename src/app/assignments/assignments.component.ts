@@ -10,6 +10,7 @@ import { Assignment } from './assignment.model';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from "./add-assignment/add-assignment.component";
 import { AssignmentsService } from '../shared/assignments.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'app-assignments',
@@ -18,7 +19,7 @@ import { AssignmentsService } from '../shared/assignments.service';
     templateUrl: './assignments.component.html',
     styleUrl: './assignments.component.css',
     imports: [CommonModule, MatButtonModule, MatListModule, RenduDirective, AssignmentDetailComponent,
-      AddAssignmentComponent, RouterLink]
+      AddAssignmentComponent, RouterLink,MatSlideToggleModule]
 })
 export class AssignmentsComponent implements OnInit {
   titre = 'Liste des assignments';
