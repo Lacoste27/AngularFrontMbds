@@ -64,9 +64,10 @@ export class AssignmentsComponent implements OnInit {
 
   deleteAssignement(){
     if(this.assignmentSelectionne){
-      var index = this.assignments.indexOf(this.assignmentSelectionne);
-      this.assignments.splice(index, 1);
-      this.assignmentSelectionne = undefined;
+      this.assignmentService.deleteAssignment(this.assignmentSelectionne).subscribe((reponse) => { 
+        console.log(reponse);
+        this.assignmentSelectionne = undefined;
+      });
     }
   }
 }

@@ -28,6 +28,9 @@ export class AssignmentDetailComponent {
   onAssignmentRendu() {
     // on a cliqué sur la checkbox, on change le statut de l'assignment
     if(this.assignmentTransmis) {
+      this.assignementService.updateAssignment(this.assignmentTransmis).subscribe((assignments) => {
+        console.log(assignments);
+      });
     }
   }
 
