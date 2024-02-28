@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 import { RenduDirective } from "../shared/rendu.directive";
 import { Assignment } from './assignment.model';
@@ -17,14 +18,12 @@ import { AssignmentsService } from '../shared/assignments.service';
     templateUrl: './assignments.component.html',
     styleUrl: './assignments.component.css',
     imports: [CommonModule, MatButtonModule, MatListModule, RenduDirective, AssignmentDetailComponent,
-      AddAssignmentComponent]
+      AddAssignmentComponent, RouterLink]
 })
 export class AssignmentsComponent implements OnInit {
   titre = 'Liste des assignments';
   formVisible=false;
-
-  // Mémorisation de l'assignment cliqué
-  assignmentSelectionne:Assignment | undefined;
+  assignmentSelectionne: Assignment | undefined;
 
   constructor(private assignmentService: AssignmentsService){
 

@@ -7,6 +7,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 
 import { Assignment } from '../assignment.model';
+import { AssignmentsService } from '../../shared/assignments.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-assignment',
@@ -23,24 +25,29 @@ import { Assignment } from '../assignment.model';
   styleUrl: './add-assignment.component.css',
 })
 export class AddAssignmentComponent {
-  @Output()
-  nouvelAssignment = new EventEmitter<Assignment>();
 
   // champs du formulaire
   nomAssignment = '';
   dateDeRendu = undefined;
 
+  constructor(private assignmentService: AssignmentsService, private router: Router){}
+
   onSubmit(event: any) {
     if((this.nomAssignment == '') || (this.dateDeRendu === undefined)) return;
 
+
     // on crée un nouvel assignment
+    //get the max id on a list of assignmen
+
+
     let nouvelAssignment = new Assignment();
     nouvelAssignment.nom = this.nomAssignment;
     nouvelAssignment.dateDeRendu = this.dateDeRendu;
     nouvelAssignment.rendu = false;
 
-    // on le rajoute au tableau des assignments
-    //this.assignments.push(nouvelAssignment);
-    this.nouvelAssignment.emit(nouvelAssignment);
+    this.assignmentService.addAssignment(nouvelAssignment).subscribe((reponse) => {
+      console.log(reponse);
+      this.router.navigate(['home']);
+    });
   }
 }
