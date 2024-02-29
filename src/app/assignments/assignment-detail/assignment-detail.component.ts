@@ -28,9 +28,9 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var id = +this.route.snapshot.params['id'];
+    var id = this.route.snapshot.params['id'];
 
-    this.assignementService.getAssignmentById(id).subscribe((assignment) => { 
+    this.assignementService.getAssignment(id).subscribe((assignment) => { 
       this.assignmentTransmis = assignment;
     });
   }
@@ -38,6 +38,7 @@ export class AssignmentDetailComponent implements OnInit {
   onAssignmentRendu() {
     // on a cliqué sur la checkbox, on change le statut de l'assignment
     if(this.assignmentTransmis) {
+      this.assignmentTransmis.rendu = true;
       this.assignementService.updateAssignment(this.assignmentTransmis).subscribe((assignments) => {
         console.log(assignments);
         this.router.navigate(['home']);

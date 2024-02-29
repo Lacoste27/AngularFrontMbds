@@ -9,11 +9,21 @@ import { AssignmentsService } from '../../shared/assignments.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @Component({
   selector: 'app-edit-assignment',
   standalone: true,
-  imports: [MatFormField, MatDatepicker, FormsModule, MatDatepickerToggle, MatDatepickerModule],
   providers: [provideNativeDateAdapter()],
+  imports: [
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatButtonModule,
+  ],
   templateUrl: './edit-assignment.component.html',
   styleUrl: './edit-assignment.component.css'
 })
@@ -29,8 +39,9 @@ export class EditAssignmentComponent implements OnInit {
 
   ngOnInit(): void {
     // le "+" force l'id de type string en "number"
-    const id = +this.route.snapshot.params['id'];
-    this.assignmentService.getAssignmentById(id).subscribe((assignment) => {
+    const id = this.route.snapshot.params['id'];
+
+    this.assignmentService.getAssignment(id).subscribe((assignment) => {
       if (!assignment) return;
       this.assignment = assignment;
       this.nomAssignment = assignment.nom;
